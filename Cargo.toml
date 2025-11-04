@@ -2,6 +2,11 @@
 name = "executive-decision-maker"
 version = "0.1.0"
 edition = "2021"
+description = "A terminal user interface recreation of the classic Radio Shack Executive Decision Maker with animated answer reveal."
+authors = ["Frank Stallion frank.stallion@ojefe.com"]
+license = "MIT"
+readme = "README.md"
+keywords = ["tui", "cli", "game", "decision", "rust"]
 
 [dependencies]
 ratatui = "0.28"
