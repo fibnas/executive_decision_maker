@@ -19,7 +19,7 @@ use ratatui::{
     Terminal,
 };
 use std::{
-    io,
+    io::{self, Write},
     time::{Duration, Instant},
 };
 
@@ -86,6 +86,7 @@ impl App {
             end_at: now + Duration::from_millis(ANIMATION_DURATION_MS),
             next_switch: now,
         };
+        Self::beep();
     }
 
     fn tick(&mut self) {
@@ -104,6 +105,7 @@ impl App {
                         index: final_index,
                         until: now + Duration::from_millis(ANSWER_FLASH_MS),
                     };
+                    Self::beep();
                 } else if now >= next_switch {
                     let mut rng = rand::thread_rng();
                     let mut next_index = rng.gen_range(0..ANSWERS.len());
@@ -118,6 +120,7 @@ impl App {
                         end_at,
                         next_switch: now + Duration::from_millis(ANIMATION_STEP_MS),
                     };
+                    Self::beep();
                 }
             }
             State::Showing { until, .. } => {
@@ -173,6 +176,12 @@ impl App {
             }
             _ => false,
         }
+    }
+
+    fn beep() {
+        let mut stdout = io::stdout();
+        let _ = stdout.write_all(b"\x07");
+        let _ = stdout.flush();
     }
 }
 
